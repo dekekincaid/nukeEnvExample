@@ -1,0 +1,722 @@
+#! /Applications/Nuke6.3v3/Nuke6.3v3.app/Contents/MacOS/Nuke6.3v3 -nx
+version 6.3 v3
+define_window_layout_xml {<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0">
+    <window x="0" y="22" w="1916" h="1178" screen="0">
+        <splitter orientation="1">
+            <split size="1279"/>
+            <splitter orientation="1">
+                <split size="40"/>
+                <dock id="" hideTitles="1" activePageId="Toolbar.1">
+                    <page id="Toolbar.1"/>
+                </dock>
+                <split size="1235"/>
+                <splitter orientation="2">
+                    <split size="576"/>
+                    <dock id="" activePageId="Viewer.1">
+                        <page id="com.ohufx.SearchReplace"/>
+                        <page id="Viewer.1"/>
+                    </dock>
+                    <split size="576"/>
+                    <dock id="" activePageId="DAG.1">
+                        <page id="DAG.1"/>
+                        <page id="Curve Editor.1"/>
+                        <page id="DopeSheet.1"/>
+                        <page id="Error Console.1"/>
+                        <page id="Script Editor.2"/>
+                    </dock>
+                </splitter>
+            </splitter>
+            <split size="633"/>
+            <dock id="" activePageId="Properties.1">
+                <page id="Properties.1"/>
+            </dock>
+        </splitter>
+    </window>
+</layout>
+}
+Root {
+ inputs 0
+ name /Users/deke/nukescripts/nukeEnvExampleFiles/menuPyAnatomy_v01.nk
+ frame 5
+ last_frame 96
+ format "640 480 0 0 640 480 1 PC_Video"
+ proxy_type scale
+ proxy_format "1024 778 0 0 1024 778 1 1K_Super_35(full-ap)"
+ luts {linear {}
+   sRGB {}
+   rec709 {}
+   Cineon {}
+   Gamma1.8 {}
+   Gamma2.2 {}
+   Panalog {}
+   REDLog {}
+   ViperLog {}
+   REDSpace {}
+   sLog {"pow(10.0, ((t - 0.616596 - 0.03) /0.432699)) - 0.037584"}
+   AlexaV3LogC {"(t > 0.1496582 ? pow(10.0, (t - 0.385537) / 0.2471896) : t / 0.9661776 - 0.04378604) * 0.18 - 0.00937677 "}}
+ views {
+  {LFT ""}
+  {RGT ""}
+ }
+ addUserKnob {20 User}
+ addUserKnob {4 deptMode l "Choose a department mode:" M {none "Paint Fix" Lighting FX}}
+ addUserKnob {2 filebase}
+ filebase /studio/pib/shdw_light/prod/sqtrain/sfoundry_teacher/comp/DreamworksWorkingFiles/24-Relighting/footage/
+ addUserKnob {20 mariTab l Mari}
+ addUserKnob {3 socketPort l "command port" t "Port to listen on. Make sure this matches the command port set in Mari's \"Nuke\" Palette." -STARTLINE}
+ socketPort 50007
+ addUserKnob {6 enableSocket l enable -STARTLINE}
+ addUserKnob {1 hostName l "Mari host/port" t "Set machine name or ip address that Mari is running on.\nLeave empty if both Mari and Nuke are running on the same machine."}
+ addUserKnob {3 socketPortSend l "" t "Port that Mari is listening to. Make sure this matches the command port set in Mari's Preferences." -STARTLINE}
+ socketPortSend 6100
+ addUserKnob {2 mariDataDir l "mari data dir" t "Path to directory that will hold data to be sent to Mari (exrs, objs and fbx files). If this is left empty a \"mari\" directory will be created in the nk file's location"}
+ mariDataDir "\[file dirname \[value root.name]]/mariData"
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode2
+ tile_color 0x20034ff
+ label "\n\nnuke.addFormat(\"                                                                                                  \")\n\n\n\n nuke.addFormat (\"1280 720 0 0 1280 720 1.0 720p\")\n nuke.addFormat (\"2048 1108 0 0 2048 1108 1.0 2k_185\")\n nuke.addFormat (\"2048 1157 0 0 2048 1157 1.0 2k_3perf\")\n nuke.addFormat (\"2048 872 0 0 2048 872 1.0 2k_235\")"
+ note_font_size 42
+ xpos 1288
+ ypos -3238
+ bdwidth 1658
+ bdheight 539
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode5
+ tile_color 0xff5f00ff
+ label "\n\n\n\n\n\n  nuke.knobDefault('Grade.black_clamp','false')\n#When you create a Grade node, take the knob \"black_clamp\" and make it's value \"false\" or \"off\"\n\n  nuke.knobDefault(\"Write.channels\", \"rgba\")\n#When you create a write node, change the default output from \"rgb\" to \"rgba\"\n\n"
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 1308
+ ypos 26
+ bdwidth 1849
+ bdheight 691
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode4
+ tile_color 0x142e46ff
+ label "\n\n\n  nuke.menu(\"Nuke\").addMenu(\"Help\").addCommand(\"Creative Crash Nuke Downloads\", \"nuke.tcl(\\\"start \\\\\\\"http://www.creativecrash.com/nuke/downloads/\\\\\\\"\\\")\")\n#In the Help menu make a button called \"Creative Crash Nuke Downloads\"\n#Open the url\n\nnuke.menu(\"Nuke\").addMenu(\"Help\").addCommand(\"Nukepedia\", \"nuke.tcl(\\\"start \\\\\\\"http://www.nukepedia.com\\\\\\\"\\\")\")"
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 1293
+ ypos -1212
+ bdwidth 2989
+ bdheight 446
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode7
+ tile_color 0x142e46ff
+ label "\n\n\n#example for spawining an external application or process from a nuke button\nimport subprocess\nnuke.menu(\"Nuke\").addMenu(\"Footage\").addCommand('BrokenGlass rv', \"subprocess.Popen('/usr/local/tweaks/rv/bin/rv /path/to/my/files/', shell = True)\")\n#create a new menu called \"Footage\".  \n#Inside it add a menu item called BrokenGlass.  \n#Spawns RV flipbook for the specified file.\n\nnuke.menu(\"Nuke\").addMenu(\"Utilities\").addCommand('Vim', \"subprocess.Popen('/usr/bin/gvim', shell = True)\")\n#create a menu on the top bar called Utilities\n#adds a button called \"Vim\"\n#start up the external application gvim from the shell "
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 1306
+ ypos -718
+ bdwidth 3506
+ bdheight 702
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode6
+ tile_color 0x849b00ff
+ label "\n\n\n\n\n\n  nuke.root().knob('luts').addCurve(\"sLog\", \"\{pow(10.0, ((t - 0.616596 - 0.03) /0.432699)) - 0.037584\}\")\n#Add the curve called \"sLog\" to the root luts with the included formula for reversing the curve\n\n"
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 1304
+ ypos 818
+ bdwidth 1932
+ bdheight 556
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode8
+ tile_color 0x2d03ff
+ label "\n\n\n\n\n\n\n\n\n\n\n nuke.ViewerProcess.register(\"Cineon\", nuke.createNode, (\"ViewerProcess_1DLUT\", \"current Cineon\"))\n#adds the default cineon 1d lut to the viewer\n\n\nnuke.ViewerProcess.register(\"My Custom Process\", nuke.Node, (\"MyProcess\", \"\"))\n#adds \"My Custom Process\" to viewer\n#Use the gizmo called MyProcess.gizmo\n\n\n  nuke.ViewerProcess.register(\"AlexaV3Rec709\", nuke.createNode, (\"Vectorfield\",\"vfield_file /path/to/lut/AlexaV3_EI0800_WYSIWYG_EE_nuke1d.cube colorspaceIn AlexaV3LogC\"))\n#Create a viewer process called \"AlexaV3Rec709\"\n#inside the viewer use a Vectorfield node with the included lut\n#convert the incoming colorspace to AlexaV3LogC before applying the vectorfield\n\n"
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 1304
+ ypos 1426
+ bdwidth 3401
+ bdheight 1133
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode1
+ tile_color 0x142e46ff
+ label "\n\n\n\n\n\n\n\nnuke.menu(\"Nodes\").addMenu(\"Filter\").addCommand(\"aePremult\", \"nuke.createNode('aePremult.gizmo')\", index=4)\n#add a gizmo dFielder to the Filter menu as item number 4 in the menu\n\nnuke.menu(\"Nodes\").addMenu(\"Image\").addCommand(\"Grad\", \"nuke.createNode('grad')\", icon='grad.png', index=8)\n#add the Grad gizmo to Image menu with the icon grad.png as item number 8 in the menu\n\nnuke.menu(\"Nodes\").addMenu(\"Channels\").addCommand(\"Branch Out Channels\", \"branchout.branchout()\", 'alt+b')\n#add python script called branchout to the Channels menu.  Call branchout function from inside the script.  Also assign the alt+b hotkey"
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 1293
+ ypos -2590
+ bdwidth 3466
+ bdheight 761
+}
+BackdropNode {
+ inputs 0
+ name BackdropNode3
+ tile_color 0x142e46ff
+ label "\n\n\nmenubar=nuke.menu(\"Nodes\")\nm=menubar.addMenu(\"Image\")\nm.addCommand(\"Grad\", \"nuke.createNode('grad')\", icon='grad.png', index=8)\nm.addCommand(\"aePremult\", \"nuke.createNode('aePremult.gizmo')\", index=4)\nimport branchout\nm.addCommand(\"Branch Out Channels\", \"branchout.branchout()\")"
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 1293
+ ypos -1772
+ bdwidth 2010
+ bdheight 456
+}
+StickyNote {
+ inputs 0
+ name StickyNote21
+ label "Anatomy of a Nuke menu.py file"
+ note_font_size 50
+ xpos 1656
+ ypos -3516
+}
+StickyNote {
+ inputs 0
+ name StickyNote8
+ tile_color 0xd8d8d8ff
+ label Top
+ note_font_size 42
+ xpos 2160
+ ypos -3143
+}
+StickyNote {
+ inputs 0
+ name StickyNote7
+ tile_color 0xd8d8d8ff
+ label Right
+ note_font_size 42
+ xpos 2052
+ ypos -3143
+}
+StickyNote {
+ inputs 0
+ name StickyNote2
+ tile_color 0xd8d8d8ff
+ label Y
+ note_font_size 42
+ xpos 1960
+ ypos -3143
+}
+StickyNote {
+ inputs 0
+ name StickyNote5
+ tile_color 0xd8d8d8ff
+ label Y
+ note_font_size 42
+ xpos 1710
+ ypos -3143
+}
+StickyNote {
+ inputs 0
+ name StickyNote6
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label X
+ note_font_size 42
+ xpos 1610
+ ypos -3143
+}
+StickyNote {
+ inputs 0
+ name StickyNote4
+ tile_color 0xd8d8d8ff
+ label X
+ note_font_size 42
+ xpos 1860
+ ypos -3143
+}
+StickyNote {
+ inputs 0
+ name StickyNote9
+ tile_color 0xd8d8d8ff
+ label "Aspect Ratio"
+ note_font_size 42
+ xpos 2288
+ ypos -3143
+}
+Reformat {
+ inputs 0
+ name Reformat1
+ xpos 2760
+ ypos -3129
+}
+StickyNote {
+ inputs 0
+ name StickyNote19
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "\").addCommand(\""
+ note_font_size 42
+ xpos 2196
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote20
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "\", \"nuke.createNode('"
+ note_font_size 42
+ xpos 2918
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote12
+ tile_color 0xd8d8d8ff
+ label " Gizmo file name "
+ note_font_size 42
+ xpos 3299
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote22
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "')\", icon='"
+ note_font_size 42
+ xpos 3618
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote14
+ tile_color 0xd8d8d8ff
+ label " iconName.png "
+ note_font_size 42
+ xpos 3811
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote23
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "'  , index="
+ note_font_size 42
+ xpos 4112
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote13
+ tile_color 0xd8d8d8ff
+ label " item number in menu "
+ note_font_size 42
+ xpos 4307
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote25
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Define file formats "
+ note_font_size 52
+ xpos 1290
+ ypos -3316
+}
+StickyNote {
+ inputs 0
+ name StickyNote36
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Alternative way to add many items to a single menu with basic variables"
+ note_font_size 52
+ xpos 1299
+ ypos -1754
+}
+StickyNote {
+ inputs 0
+ name StickyNote11
+ tile_color 0xd8d8d8ff
+ label " Gizmo Name in Menu "
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 2503
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote1
+ tile_color 0x20034ff
+ label " File Size "
+ note_font_size 42
+ xpos 1616
+ ypos -3215
+}
+StickyNote {
+ inputs 0
+ name StickyNote3
+ tile_color 0x20034ff
+ label " Image Area "
+ note_font_size 42
+ xpos 1937
+ ypos -3215
+}
+StickyNote {
+ inputs 0
+ name StickyNote10
+ tile_color 0xd8d8d8ff
+ label Name
+ note_font_size 42
+ xpos 2546
+ ypos -3143
+}
+StickyNote {
+ inputs 0
+ name StickyNote24
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Add button to nuke menus "
+ note_font_size 52
+ xpos 1299
+ ypos -2668
+}
+StickyNote {
+ inputs 0
+ name StickyNote16
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label " nuke.menu(\"Nodes\").addMenu(\""
+ note_font_size 42
+ xpos 1320
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote17
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Examples "
+ note_font_size 52
+ xpos 1328
+ ypos -2356
+}
+StickyNote {
+ inputs 0
+ name StickyNote18
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Menu Name "
+ note_font_size 42
+ xpos 1933
+ ypos -2543
+}
+StickyNote {
+ inputs 0
+ name StickyNote32
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label " nuke.menu(\"Nuke\").addMenu(\""
+ note_font_size 42
+ xpos 1332
+ ypos -2423
+}
+StickyNote {
+ inputs 0
+ name StickyNote28
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Examples "
+ note_font_size 52
+ xpos 1328
+ ypos -3052
+}
+StickyNote {
+ inputs 0
+ name StickyNote44
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Examples "
+ note_font_size 52
+ xpos 1332
+ ypos 212
+}
+StickyNote {
+ inputs 0
+ name StickyNote42
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "  nuke.knobDefault('  "
+ note_font_size 42
+ xpos 1324
+ ypos 121
+}
+StickyNote {
+ inputs 0
+ name StickyNote31
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "  ','  "
+ note_font_size 42
+ xpos 1914
+ ypos 121
+}
+StickyNote {
+ inputs 0
+ name StickyNote43
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " knob name"
+ note_font_size 42
+ xpos 1700
+ ypos 121
+}
+StickyNote {
+ inputs 0
+ name StickyNote41
+ tile_color 0xd8d8d8ff
+ label " knob value "
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 1997
+ ypos 121
+}
+StickyNote {
+ inputs 0
+ name StickyNote34
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label " ') "
+ note_font_size 42
+ xpos 2214
+ ypos 121
+}
+StickyNote {
+ inputs 0
+ name StickyNote30
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Setting knob defaults on node creation"
+ note_font_size 52
+ xpos 1314
+ ypos 44
+}
+StickyNote {
+ inputs 0
+ name StickyNote35
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Examples "
+ note_font_size 52
+ xpos 1328
+ ypos 1004
+}
+StickyNote {
+ inputs 0
+ name StickyNote37
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "  nuke.root().knob('luts').addCurve(\"  "
+ note_font_size 42
+ xpos 1320
+ ypos 913
+}
+StickyNote {
+ inputs 0
+ name StickyNote39
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " lut name"
+ note_font_size 42
+ xpos 1972
+ ypos 913
+}
+StickyNote {
+ inputs 0
+ name StickyNote38
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "  \",\"\{  "
+ note_font_size 42
+ xpos 2164
+ ypos 913
+}
+StickyNote {
+ inputs 0
+ name StickyNote45
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label " \}\") "
+ note_font_size 42
+ xpos 2764
+ ypos 913
+}
+StickyNote {
+ inputs 0
+ name StickyNote40
+ tile_color 0xd8d8d8ff
+ label " formula for reversing curve "
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 2262
+ ypos 913
+}
+StickyNote {
+ inputs 0
+ name StickyNote46
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Creating a root LUT"
+ note_font_size 52
+ xpos 1310
+ ypos 836
+}
+StickyNote {
+ inputs 0
+ name StickyNote29
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " examples for adding html links to help Menu"
+ note_font_size 52
+ xpos 1316
+ ypos -1180
+}
+StickyNote {
+ inputs 0
+ name StickyNote53
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " example menu item for launching an external application"
+ note_font_size 52
+ xpos 1332
+ ypos -700
+}
+StickyNote {
+ inputs 0
+ name StickyNote47
+ tile_color 0xd8d8d8ff
+ label "   #import the python script branchout so we can call any functions inside it"
+ note_font "Bitstream Vera Sans"
+ note_font_size 30
+ xpos 1612
+ ypos -1482
+}
+StickyNote {
+ inputs 0
+ name StickyNote27
+ tile_color 0xd8d8d8ff
+ label "    #take the variable menubar + .addMenu(\"Image\") and assign it to a new variable called \"m\"     "
+ note_font "Bitstream Vera Sans"
+ note_font_size 30
+ xpos 1844
+ ypos -1600
+}
+StickyNote {
+ inputs 0
+ name StickyNote26
+ tile_color 0xd8d8d8ff
+ label "   #assign the command nuke.menu(\"Nodes\") to the variable \"menubar\"    "
+ note_font "Bitstream Vera Sans"
+ note_font_size 30
+ xpos 1839
+ ypos -1648
+}
+StickyNote {
+ inputs 0
+ name StickyNote33
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label "   #This alternative adds items to the top bar of Nuke"
+ note_font_size 30
+ xpos 1333
+ ypos -2468
+}
+StickyNote {
+ inputs 0
+ name StickyNote49
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "  nuke.ViewerProcess.register(\"  "
+ note_font_size 42
+ xpos 1324
+ ypos 1537
+}
+StickyNote {
+ inputs 0
+ name StickyNote51
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "  \", nuke.createNode, (\"  "
+ note_font_size 42
+ xpos 2262
+ ypos 1537
+}
+StickyNote {
+ inputs 0
+ name StickyNote55
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Add a custom viewer Lut or gizmo process"
+ note_font_size 52
+ xpos 1310
+ ypos 1444
+}
+StickyNote {
+ inputs 0
+ name StickyNote50
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label "  Viewer process label  "
+ note_font_size 42
+ xpos 1866
+ ypos 1537
+}
+StickyNote {
+ inputs 0
+ name StickyNote56
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "  \"))  "
+ note_font_size 42
+ xpos 3260
+ ypos 1537
+}
+StickyNote {
+ inputs 0
+ name StickyNote52
+ tile_color 0x142e46ff
+ gl_color 0x46cc2cff
+ label "  \",\"  "
+ note_font_size 42
+ xpos 2910
+ ypos 1537
+}
+StickyNote {
+ inputs 0
+ name StickyNote54
+ tile_color 0xd8d8d8ff
+ label " node name "
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 2692
+ ypos 1537
+}
+StickyNote {
+ inputs 0
+ name StickyNote57
+ tile_color 0xd8d8d8ff
+ label " node settings "
+ note_font "Bitstream Vera Sans"
+ note_font_size 42
+ xpos 2993
+ ypos 1537
+}
+StickyNote {
+ inputs 0
+ name StickyNote48
+ tile_color 0xd8d8d8ff
+ gl_color 0x46cc2cff
+ label " Examples "
+ note_font_size 52
+ xpos 1328
+ ypos 1772
+}
